@@ -2,8 +2,25 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import App from "./App";
+import BootstrapVue from "bootstrap-vue";
+import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
+import * as rules from "vee-validate/dist/rules";
+
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+
+// Install VeeValidate rules and localization
+Object.keys(rules).forEach((rule) => {
+  extend(rule, rules[rule]);
+});
+
+// Install VeeValidate components globally
+Vue.component("ValidationObserver", ValidationObserver);
+Vue.component("ValidationProvider", ValidationProvider);
 
 Vue.config.productionTip = false;
+
+Vue.use(BootstrapVue);
 
 /* eslint-disable no-new */
 new Vue({

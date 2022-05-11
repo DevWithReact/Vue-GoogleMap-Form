@@ -13,8 +13,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "bootstrap-vue": "^2.14.0",
+    "bootstrap": "^4.4.0",
     "google-maps-api-loader": "1.1.1",
-    "vue": "^2.5.2"
+    "vee-validate": "^3.2.0",
+    "vue": "^2.6.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -71,10 +74,6 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
   "keywords": []
 }
