@@ -63,11 +63,11 @@ body {
 </style>
 
 <script>
-import BTextInputWithValidation from "./inputs/BTextInputWithValidation";
-import BDatePickerWithValidation from "./inputs/BDatePickerWithValidation";
-import axios from "axios";
-import { debounce } from "lodash";
-import { google_key } from "./../config";
+import axios from 'axios';
+import { debounce } from 'lodash';
+import BTextInputWithValidation from './inputs/BTextInputWithValidation';
+import BDatePickerWithValidation from './inputs/BDatePickerWithValidation';
+import { GoogleKey } from './../config';
 
 export default {
   components: {
@@ -76,14 +76,14 @@ export default {
   },
   data() {
     return {
-      originText: "",
-      destinationText: "",
+      originText: '',
+      destinationText: '',
       departureDate: new Date(),
       returnDate: new Date(),
-      originLat: "",
-      originLong: "",
-      destinationLat: "",
-      destinationLong: "",
+      originLat: '',
+      originLong: '',
+      destinationLat: '',
+      destinationLong: '',
       locations: [],
       errors: [],
     };
@@ -91,13 +91,13 @@ export default {
   watch: {
     // Handles internal model changes.
     originText: debounce(function (newVal) {
-      if (newVal === "" || newVal === undefined) return;
-      this.getLocations("origin");
+      if (newVal === '' || newVal === undefined) return;
+      this.getLocations('origin');
     }, 500),
     // Handles external model changes.
     destinationText: debounce(function (newVal) {
-      if (newVal === "" || newVal === undefined) return;
-      this.getLocations("destination");
+      if (newVal === '' || newVal === undefined) return;
+      this.getLocations('destination');
     }, 500),
   },
   methods: {
@@ -105,32 +105,40 @@ export default {
       return dirty || validated ? valid : null;
     },
     resetForm() {
-      this.originText = "";
-      this.destinationText = "";
+      this.originText = '';
+      this.destinationText = '';
       this.departureDate = new Date();
       this.returnDate = new Date();
-      this.originLat = "";
-      this.originLng = "";
-      this.destinationLat = "";
-      this.destinationLng = "";
+      this.originLat = '';
+      this.originLng = '';
+      this.destinationLat = '';
+      this.destinationLng = '';
+      this.locations = [];
       this.$nextTick(() => {
         this.$refs.observer.reset();
+        this.$emit('update-markers', this.locations);
       });
     },
     validate() {
       const validates = [];
-      if (this.originText === "")
-        validates.push("Origin Address can not be empty.");
-      if (this.destinationText === "")
-        validates.push("Destination Address can not be empty.");
-      if (this.departureDate === null)
-        validates.push("Departure Date can not be empty.");
-      if (this.returnDate === null)
-        validates.push("Return Date can not be empty.");
-      if (this.originLat === "" || this.originLng === "")
-        validates.push("Origin Address is not valid.");
-      if (this.destinationLat === "" || this.destinationLng === "")
-        validates.push("Destination Address is not valid.");
+      if (this.originText === '') {
+        validates.push('Origin Address can not be empty.');
+      }
+      if (this.destinationText === '') {
+        validates.push('Destination Address can not be empty.');
+      }
+      if (this.departureDate === null) {
+        validates.push('Departure Date can not be empty.');
+      }
+      if (this.returnDate === null) {
+        validates.push('Return Date can not be empty.');
+      }
+      if (this.originLat === '' || this.originLng === '') {
+        validates.push('Origin Address is not valid.');
+      }
+      if (this.destinationLat === '' || this.destinationLng === '') {
+        validates.push('Destination Address is not valid.');
+      }
       this.errors = validates;
       return validates.length === 0; // check if it has error
     },
@@ -139,7 +147,7 @@ export default {
     },
     submitTrack() {
       axios
-        .post("https://jsonplaceholder.typicode.com/posts", {
+        .post('https://jsonplaceholder.typicode.com/posts', {
           data: {
             originText: this.originText,
             destinationText: this.destinationText,
@@ -152,31 +160,41 @@ export default {
           },
         })
         .then((response) => {
-          if (response.status >= 200 && response.status <= 210)
-            alert("Form submitted!");
-          else alert("Failed to submit!");
+          if (response.status >= 200 && response.status <= 210) {
+            alert('Form submitted!');
+          } else {
+            alert('Failed to submit!');
+          }
         });
     },
     getLocations(type) {
       axios
-        .get("https://maps.googleapis.com/maps/api/geocode/json", {
+        .get('https://maps.googleapis.com/maps/api/geocode/json', {
           params: {
-            address: type === "origin" ? this.originText : this.destinationText,
-            key: google_key,
+            address: type === 'origin' ? this.originText : this.destinationText,
+            key: GoogleKey,
           },
         })
         .then((response) => {
           const data = response.data;
           if (response.status === 200) {
+            const errorMessage = type === 'origin' ? 'Please input correct origin address' : 'Please input correct destination address';
             if (data.results.length === 0) {
-              if (
-                this.errors.includes("Please input correct address") === false
-              )
-                this.errors = ["Please input correct address", ...this.errors];
+              if (this.errors.includes(errorMessage) === false) {
+                this.errors = [errorMessage, ...this.errors];
+              }
+              if (type === 'origin') {
+                this.originLat = '';
+                this.orignLong = '';
+              } else {
+                this.destinationLat = '';
+                this.destinationLong = '';
+              }
             } else {
+              this.errors = this.errors.filter(item => item !== errorMessage);
               const location = data.results[0].geometry.location;
               this.locations = [...this.locations];
-              if (type === "origin") {
+              if (type === 'origin') {
                 this.originLat = location.lat;
                 this.orignLong = location.lng;
                 this.locations[0] = location;
@@ -186,7 +204,7 @@ export default {
                 if (this.locations.length === 0) this.locations = [location];
                 else this.locations[1] = location;
               }
-              this.$emit("update-markers", this.locations);
+              this.$emit('update-markers', this.locations);
             }
           }
         });

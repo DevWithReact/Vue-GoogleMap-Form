@@ -21,6 +21,7 @@
 
 <script>
 export default {
+  name: 'BTextInputWithValidation',
   components: {},
   props: {
     vid: {
@@ -28,7 +29,7 @@ export default {
     },
     rules: {
       type: [Object, String],
-      default: "",
+      default: '',
     },
     // must be included in props
     value: {
@@ -36,7 +37,7 @@ export default {
     },
   },
   data: () => ({
-    innerValue: "",
+    innerValue: '',
   }),
   methods: {
     getValidationState({ dirty, validated, valid = null }) {
@@ -46,7 +47,7 @@ export default {
   watch: {
     // Handles internal model changes.
     innerValue(newVal) {
-      this.$emit("input", newVal);
+      this.$emit('input', newVal);
     },
     // Handles external model changes.
     value(newVal) {

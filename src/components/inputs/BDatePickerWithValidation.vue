@@ -23,6 +23,7 @@
 
 <script>
 export default {
+  name: 'BDatePickerWithValidation',
   components: {},
   props: {
     vid: {
@@ -30,7 +31,7 @@ export default {
     },
     rules: {
       type: [Object, String],
-      default: "",
+      default: '',
     },
     // must be included in props
     value: {
@@ -44,7 +45,7 @@ export default {
     },
   }),
   methods: {
-    isInvalid(t) {
+    isInvalid() {
       if (this.innerValue === null) return true;
       return false;
     },
@@ -52,7 +53,7 @@ export default {
   watch: {
     // Handles internal model changes.
     innerValue(newVal) {
-      this.$emit("input", newVal);
+      this.$emit('input', newVal);
     },
     // Handles external model changes.
     value(newVal) {

@@ -26,10 +26,11 @@
 </template>
 
 <script>
-import GoogleMap from "./components/gmap/GoogleMap";
-import GoogleMapMarkers from "./components/gmap/GoogleMapMarkers";
-import SideBar from "./components/SideBar";
-import { google_key } from "./config";
+import GoogleMap from './components/gmap/GoogleMap';
+import GoogleMapMarkers from './components/gmap/GoogleMapMarkers';
+import SideBar from './components/SideBar';
+import { GoogleKey } from './config';
+
 export default {
   components: {
     GoogleMap,
@@ -46,12 +47,11 @@ export default {
         },
       },
       mapMarkers: [],
-      googleKey: google_key,
+      googleKey: GoogleKey,
     };
   },
   methods: {
-    updateMarkers: function (value) {
-      console.log("updateMarkers", value);
+    updateMarkers(value) {
       this.mapMarkers = value;
       this.mapConfig = {
         zoom: 12,

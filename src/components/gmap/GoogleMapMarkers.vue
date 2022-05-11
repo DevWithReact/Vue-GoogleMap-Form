@@ -23,16 +23,16 @@ export default {
         const { Marker, LatLng } = this.google.maps;
         this.genMarkers.push(
           new Marker({
-            title: index === 0 ? "Origin" : "Destination",
+            title: index === 0 ? 'Origin' : 'Destination',
             position: new LatLng(marker.lat, marker.lng),
             map: this.map,
-          })
+          }),
         );
       });
     },
   },
   watch: {
-    markers(newVal) {
+    markers() {
       // Remove old markers
       this.genMarkers.forEach((marker) => {
         marker.setMap(null);

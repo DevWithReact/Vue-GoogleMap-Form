@@ -3,14 +3,23 @@
 Create a simple form using react, which contains google maps integration (hidden fields getting longitude and latitude as hidden fields and updating a map with those two points)
 
 ●	include the following fields: 
+
   ○	Journey origin text (e.g. ‘Norwich, UK’) 
+
   ○	Journey origin latitude (hidden, e.g. 52.6308859) 
+
   ○	Journey origin longitude (hidden, e.g. 1.297355) 
+
   ○	Journey destination text (e.g. ‘London, UK’) 
+
   ○	Journey destination latitude (hidden, e.g. 51.5073509) 
+
   ○	Journey destination longitude (hidden, e.g. -0.1277583) 
+
   ○	Departure Date (DateTime) 
+
   ○	Return Date (DateTime) 
+  
   
 At the bottom of the form, place a submit button that sends the data as json in a fake XHR POST request. 
   
