@@ -2,12 +2,12 @@
   <div id="map">
     <!-- suspend mount children until google or map value is valid. -->
     <template v-if="!!this.google && !!this.map">
-      <slot/>
+      <slot />
     </template>
   </div>
 </template>
 <script>
-import GoogleMapsApiLoader from 'google-maps-api-loader';
+import GoogleMapsApiLoader from "google-maps-api-loader";
 
 export default {
   props: {
@@ -22,11 +22,17 @@ export default {
   },
   mounted() {
     GoogleMapsApiLoader({
-      apiKey: this.apikey
+      apiKey: this.apikey,
     }).then((google) => {
       this.google = google;
       this.initMap();
     });
+  },
+  watch: {
+    config(newVal) {
+      if (!this.map) return;
+      this.map.setOptions(newVal);
+    },
   },
   methods: {
     initMap() {
@@ -35,7 +41,7 @@ export default {
       this.map = new Map(mapContainer, this.config);
     },
   },
-}
+};
 </script>
 
 <style>

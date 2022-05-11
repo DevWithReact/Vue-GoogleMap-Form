@@ -6,7 +6,14 @@
     v-slot="validationContext"
   >
     <b-form-group v-bind="$attrs">
-      <date-picker v-model="innerValue" :config="options"> </date-picker>
+      <date-picker
+        v-model="innerValue"
+        :config="options"
+        v-bind="$attrs"
+        v-validate="{ required: true }"
+        :class="{ 'is-invalid': isInvalid() }"
+      >
+      </date-picker>
       <b-form-invalid-feedback id="inputLiveFeedback">{{
         validationContext.errors[0]
       }}</b-form-invalid-feedback>
@@ -37,14 +44,14 @@ export default {
     },
   }),
   methods: {
-    getValidationState({ dirty, validated, valid = null }) {
-      return dirty || validated ? valid : null;
+    isInvalid(t) {
+      if (this.innerValue === null) return true;
+      return false;
     },
   },
   watch: {
     // Handles internal model changes.
     innerValue(newVal) {
-      console.log("newVal", newVal);
       this.$emit("input", newVal);
     },
     // Handles external model changes.

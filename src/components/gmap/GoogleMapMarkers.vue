@@ -11,18 +11,44 @@ export default {
       return this.$parent.google;
     },
   },
-  mounted() {
-    this.markers.forEach(marker => {
-      const { Marker, LatLng } = this.google.maps;
-      new Marker({
-        title: marker.name,
-        position: new LatLng(marker.lat, marker.long),
-        map: this.map,
+  data() {
+    return {
+      genMarkers: [],
+    };
+  },
+  methods: {
+    generateMarkers() {
+      // Add new markers
+      this.markers.forEach((marker, index) => {
+        const { Marker, LatLng } = this.google.maps;
+        this.genMarkers.push(
+          new Marker({
+            title: index === 0 ? "Origin" : "Destination",
+            position: new LatLng(marker.lat, marker.lng),
+            map: this.map,
+          })
+        );
       });
-    });
+    },
+  },
+  watch: {
+    markers(newVal) {
+      // Remove old markers
+      this.genMarkers.forEach((marker) => {
+        marker.setMap(null);
+      });
+      this.genMarkers = [];
+
+      // Add new markers
+      this.generateMarkers();
+    },
+  },
+  mounted() {
+    // Add new markers
+    this.generateMarkers();
   },
   render() {
     return null;
   },
-}
+};
 </script>

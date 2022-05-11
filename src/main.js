@@ -3,7 +3,7 @@
 import Vue from "vue";
 import App from "./App";
 import BootstrapVue from "bootstrap-vue";
-import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
+import { ValidationObserver, ValidationProvider, extend, localize  } from "vee-validate";
 import * as rules from "vee-validate/dist/rules";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -16,6 +16,19 @@ import "pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css";
 // Install VeeValidate rules and localization
 Object.keys(rules).forEach((rule) => {
   extend(rule, rules[rule]);
+});
+
+
+// Override and merge the dictionaries
+localize({
+  en: {
+    names: {
+      originText: 'Origin Address',
+      destinationText: 'Destination Address',
+      departureDate: 'Departure Date',
+      returnDate: 'Return Date',
+    }
+  }
 });
 
 // Install VeeValidate components globally

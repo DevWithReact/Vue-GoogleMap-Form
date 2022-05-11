@@ -13,9 +13,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "0.27.2",
     "bootstrap": "^4.4.0",
     "bootstrap-vue": "^2.14.0",
     "google-maps-api-loader": "1.1.1",
+    "lodash": "4.17.21",
     "vee-validate": "^3.2.0",
     "vue": "^2.6.0",
     "vue-bootstrap-datetimepicker": "5.0.1"

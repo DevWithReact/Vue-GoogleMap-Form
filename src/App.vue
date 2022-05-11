@@ -14,13 +14,10 @@
     </b-navbar>
     <b-row>
       <b-col cols="12" md="4">
-        <side-bar />
+        <side-bar v-model="mapMarkers" @update-markers="updateMarkers" />
       </b-col>
       <b-col cols="12" md="8">
-        <google-map
-          :config="mapConfig"
-          apikey="AIzaSyCXQV4FpKYoFva5dmQkqTBFgZ2Ce81I204"
-        >
+        <google-map :config="mapConfig" :apikey="googleKey">
           <GoogleMapMarkers :markers="mapMarkers" />
         </google-map>
       </b-col>
@@ -32,7 +29,7 @@
 import GoogleMap from "./components/gmap/GoogleMap";
 import GoogleMapMarkers from "./components/gmap/GoogleMapMarkers";
 import SideBar from "./components/SideBar";
-
+import { google_key } from "./config";
 export default {
   components: {
     GoogleMap,
@@ -44,28 +41,23 @@ export default {
       mapConfig: {
         zoom: 12,
         center: {
-          lat: -6.1753871,
-          lng: 106.8249641,
+          lat: 52.6292567,
+          lng: 1.2978802,
         },
       },
-      mapMarkers: [
-        {
-          name: "GBK",
-          lat: -6.218605,
-          long: 106.802612,
-        },
-        {
-          name: "Ancol",
-          lat: -6.1229209,
-          long: 106.8228804,
-        },
-        {
-          name: "Monas",
-          lat: -6.1753871,
-          long: 106.8249641,
-        },
-      ],
+      mapMarkers: [],
+      googleKey: google_key,
     };
+  },
+  methods: {
+    updateMarkers: function (value) {
+      console.log("updateMarkers", value);
+      this.mapMarkers = value;
+      this.mapConfig = {
+        zoom: 12,
+        center: value[0],
+      };
+    },
   },
 };
 </script>
