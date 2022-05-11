@@ -23,6 +23,7 @@
     "vue-bootstrap-datetimepicker": "5.0.1"
   },
   "devDependencies": {
+    "@vue/test-utils": "2.0.0-rc.21",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
@@ -82,5 +83,15 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "keywords": []
+  "keywords": [],
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      ".*\\.(vue)$": "vue-jest"
+    }
+  }
 }
