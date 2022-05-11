@@ -9,6 +9,10 @@ import * as rules from "vee-validate/dist/rules";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
+import datePicker from "vue-bootstrap-datetimepicker";
+import "bootstrap/dist/css/bootstrap.css";
+import "pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css";
+
 // Install VeeValidate rules and localization
 Object.keys(rules).forEach((rule) => {
   extend(rule, rules[rule]);
@@ -21,6 +25,7 @@ Vue.component("ValidationProvider", ValidationProvider);
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
+Vue.use(datePicker);
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,24 +1,42 @@
 <template>
-  <div>
+  <div class="mb-2">
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
       <b-form @submit.stop.prevent="handleSubmit(onSubmit)">
         <BTextInputWithValidation
-          rules="required|email"
-          type="email"
+          rules="required"
+          type="text"
           label="Origin address:"
-          name="Email"
-          v-model="email"
+          name="originText"
+          v-model="originText"
           description="Please input origin address"
           placeholder="e.g. Norwich, UK"
         />
         <BTextInputWithValidation
-          rules="required|email"
-          type="email"
+          rules="required"
+          type="text"
           label="Destination address:"
-          name="Email"
-          v-model="email"
+          name="destinationText"
+          v-model="destinationText"
           description="Please input destination address"
           placeholder="e.g. London, UK"
+        />
+        <BDatePickerWithValidation
+          rules="required"
+          type="text"
+          label="Departure Date:"
+          name="departureDate"
+          v-model="departureDate"
+          description="Please input departure date"
+          placeholder=""
+        />
+        <BDatePickerWithValidation
+          rules="required"
+          type="text"
+          label="Return Date:"
+          name="returnDate"
+          v-model="returnDate"
+          description="Please input return date"
+          placeholder=""
         />
         <b-button type="submit" variant="primary">Submit</b-button>
         <b-button class="ml-2" @click="resetForm()">Reset</b-button>
@@ -35,22 +53,22 @@ body {
 
 <script>
 import BTextInputWithValidation from "./inputs/BTextInputWithValidation";
+import BDatePickerWithValidation from "./inputs/BDatePickerWithValidation";
 export default {
   components: {
     BTextInputWithValidation,
+    BDatePickerWithValidation,
   },
   data() {
     return {
-      email: "",
-      password: "",
-      confirmation: "",
-      subject: "",
-      choices: [],
-      foods: [
-        { value: null, text: "Choose..." },
-        { value: "apple", text: "Apple" },
-        { value: "orange", text: "Orange" },
-      ],
+      originText: "",
+      destinationText: "",
+      departureDate: new Date(),
+      returnDate: new Date(),
+      originLat: "",
+      originLong: "",
+      destinationLat: "",
+      destinationLong: "",
       form: {
         name: null,
         food: null,
@@ -62,11 +80,14 @@ export default {
       return dirty || validated ? valid : null;
     },
     resetForm() {
-      this.form = {
-        name: null,
-        food: null,
-      };
-
+      this.originText = "";
+      this.destinationText = "";
+      this.departureDate = new Date();
+      this.returnDate = new Date();
+      this.originLat = "";
+      this.originLong = "";
+      this.destinationLat = "";
+      this.destinationLong = "";
       this.$nextTick(() => {
         this.$refs.observer.reset();
       });

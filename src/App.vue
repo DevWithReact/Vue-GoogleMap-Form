@@ -13,7 +13,9 @@
       >
     </b-navbar>
     <b-row>
-      <b-col cols="12" md="4"><side-bar /></b-col>
+      <b-col cols="12" md="4">
+        <side-bar />
+      </b-col>
       <b-col cols="12" md="8">
         <google-map
           :config="mapConfig"
